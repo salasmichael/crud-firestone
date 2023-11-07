@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FirestoneService } from '../services/data/firestone.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  songList: any = [];
 
-  constructor() {}
+  constructor(
+      private firestoneService:FirestoneService,
+      private route: Router
+  ) {}
 
+    ngOnInit(): void {
+      
+      this.firestoneService.getSongList()
+      .subscribe(( songs )=>{
+        this.songList = songs;
+      },(error)=>{
+        console.log(error);
+        
+      })
+    }
 }
